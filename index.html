@@ -1,0 +1,87 @@
+<!DOCTYPE html> 
+<html id="doc" style="width: 100%; height: 100%"> 
+<head> 
+<title>Grid View Example</title> 
+        
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale: 1, maximum-scale: 1"> 
+ 
+<!--jQuery Mobile-->
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        
+        <script>
+            
+            function InitApp()
+            {
+                var gridHeight = 400;
+                var gridWidth = 500;
+                var scrollBarWidth = getScrollSizes(); //get scroll bar's width.
+                
+                $("#div-header").css("width", (gridWidth - scrollBarWidth) + "px");
+                $("#div-header-hack").css("width", (scrollBarWidth) + "px");
+                $("#div-item").css("width", (gridWidth) + "px");
+                
+                $("#div-header-hack").css("left", (gridWidth - scrollBarWidth) + "px");
+                
+                $("#div-item").css("max-height", (gridHeight) + "px");
+                
+                //add header and item divs, directly in HTML Or in javascript.
+                var header = '<div style="min-width: 1000px;">' +
+                    '<div style="width: 120px; display: inline-block">Header 1</div>' +
+                    '<div style="width: 180px; display: inline-block">Header 2</div>' +
+                    '<div style="width: 120px; display: inline-block">Header 3</div>' +
+                    '<div style="width: 190px; display: inline-block">Header 4</div>' +
+                    '<div style="width: 250px; display: inline-block">Header 5</div>' +
+                    '<div style="width: 120px; display: inline-block">Header 6</div>' +
+                '</div>';
+                    
+                //add header and item divs, directly in HTML Or in javascript.
+                var item = '<div style="min-width: 1000px; background-color: #D7BDEC; padding: 10px 0px 0px 0px; border-bottom: 1px solid gray">' +
+                    '<div style="width: 120px; display: inline-block">Item 1</div>' +
+                    '<div style="width: 180px; display: inline-block">Item 2</div>' +
+                    '<div style="width: 120px; display: inline-block">Item 3</div>' +
+                    '<div style="width: 190px; display: inline-block">Item 4</div>' +
+                    '<div style="width: 250px; display: inline-block">Item 5</div>' +
+                    '<div style="width: 120px; display: inline-block">Item 6</div>' +
+                '</div>';
+                    
+                 $("#div-header").append(header);
+                
+                 for(var index = 0; index < 600; index ++)
+                 {
+                     $("#div-item").append(item);
+                 }
+            }
+            
+            function ScrollHeader()
+            {
+                $("#div-header").scrollLeft($("#div-item").scrollLeft());
+            }
+                
+            //refernce - http://stackoverflow.com/questions/457262/html-what-is-the-height-of-a-horizontal-scrollbar
+            function getScrollSizes() 
+            { 
+                // call after document is finished loading
+                var el= document.createElement('div');
+                el.style.display= 'hidden';
+                el.style.overflow= 'scroll';
+                document.body.appendChild(el);
+                var h= el.offsetHeight-el.clientHeight;
+                document.body.removeChild(el);
+                return h;
+            }
+        </script>
+    </head> 
+   
+<body id="doc-body" style="width: 100%; height: 100%; overflow: hidden; position: fixed" onload="InitApp()"> 
+        <div>
+            <!--If you don't need header background color you don't need this div.-->
+            <div id="div-header-hack" style="height: 20px; position: absolute; background-color: gray"></div>
+            
+            <div id="div-header" style="position: absolute; top: 0px; overflow: hidden; height: 20px; background-color: gray">                
+            </div>
+            
+            <div id="div-item" style="position: absolute; top: 20px; overflow: auto" onscroll="ScrollHeader()">                
+            </div>
+        </div>
+</body>
+</html>
